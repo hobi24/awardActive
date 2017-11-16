@@ -1,0 +1,108 @@
+{
+  "Data": {
+    "IsQualified": true,
+    "QualifiedDiffAmount":1000,
+    "IsReceived": false,
+    "Activity": {
+      "ActivityId": 86,
+      "ActivityState": 2,
+      "BeginTime": "2017-02-14T11:07:07.640625+08:00",
+      "EndTime": "2017-02-14T11:07:07.640625+08:00",
+      "ReceivePrizeEndTime": "2017-06-06T11:07:07.640625+08:00",
+      "RegisterExperienceAmount": 500,
+      "InvestmentExperienceAmount": 500,
+      "MaxExperienceAmount": 10000,
+      "QualifieAmount": 1000
+    },
+    "Team": {
+      "TeamId": 2,
+      "CaptainAvatar": "sample string 2",
+      "CaptainName": "sample string 3",
+      "ExperienceAmount": 120,
+      "TeamMembers": [
+        {
+          "Avatar": "img/goRecharge.png",
+          "NickName": "188****3109",
+          "RegisterDate": "2017-02-10T14:54:04+08:00",
+          "IsInvestment": false,
+          "Message": "sample string 5"
+        },
+        {
+          "Avatar": "img/goRecharge.png",
+          "NickName": "我的昵称能有多长",
+          "RegisterDate": "2017-02-10T14:54:04+08:00",
+          "IsInvestment": false,
+          "Message": "sample string 5"
+        },
+        {
+          "Avatar": "img/goRecharge.png",
+          "NickName": "我的昵称能有多长",
+          "RegisterDate": "2017-02-10T14:54:04+08:00",
+          "IsInvestment": false,
+          "Message": "sample string 5"
+        },
+        {
+          "Avatar": "img/goRecharge.png",
+          "NickName": "我的昵称能有多长",
+          "RegisterDate": "2017-02-10T14:54:04+08:00",
+          "IsInvestment": false,
+          "Message": "sample string 5"
+        },
+        {
+          "Avatar": "img/goRecharge.png",
+          "NickName": "我的昵称能有多长",
+          "RegisterDate": "2017-02-10T14:54:04+08:00",
+          "IsInvestment": false,
+          "Message": "sample string 5"
+        },
+        {
+          "Avatar": "img/goRecharge.png",
+          "NickName": "我的昵称能有多长",
+          "RegisterDate": "2017-02-10T14:54:04+08:00",
+          "IsInvestment": false,
+          "Message": "sample string 5"
+        },
+        {
+          "Avatar": "img/goRecharge.png",
+          "NickName": "我的昵称能有多长",
+          "RegisterDate": "2017-02-10T14:54:04+08:00",
+          "IsInvestment": false,
+          "Message": "sample string 5"
+        },
+        {
+          "Avatar": "img/goRecharge.png",
+          "NickName": "我的昵称能有多长",
+          "RegisterDate": "2017-02-10T14:54:04+08:00",
+          "IsInvestment": false,
+          "Message": "sample string 5"
+        },
+        {
+          "Avatar": "img/goRecharge.png",
+          "NickName": "我的昵称能有多长",
+          "RegisterDate": "2017-02-10T14:54:04+08:00",
+          "IsInvestment": false,
+          "Message": "sample string 5"
+        },
+        {
+          "Avatar": "img/goRecharge.png",
+          "NickName": "我的昵称能有多长",
+          "RegisterDate": "2017-02-10T14:54:04+08:00",
+          "IsInvestment": false,
+          "Message": "sample string 5"
+        },
+        {
+          "Avatar": "img/goRecharge.png",
+          "NickName": "我的昵称能有多长",
+          "RegisterDate": "2017-02-10T14:54:04+08:00",
+          "IsInvestment": false,
+          "Message": "sample string 5"
+        }
+
+      ]
+    }
+  },
+  "Success": true,
+  "ErrorCode": "sample string 2",
+  "ErrorMessage": "sample string 3",
+  "ServiceTime": "sample string 4"
+}

@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta id="view" name="viewport" content="target-densitydpi=device-dpi, width=750px, user-scalable=no">
+    <!--不可以用手指缩放-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" /> <!--防止呼叫-->
+    <script type="text/javascript">
+        var DEFAULT_WIDTH = 750,
+                ua = navigator.userAgent.toLowerCase(), // 根据 user agent 的信息获取浏览器信息
+                deviceWidth = window.screen.width, // 设备的宽度
+                devicePixelRatio = window.devicePixelRatio || 1, // 物理像素和设备独立像素的比例，默认为1
+                targetDensitydpi;
+        // Android4.0以下手机不支持viewport的width，需要设置target-densitydpi
+        if (ua.indexOf("android") !== -1 && parseFloat(ua.slice(ua.indexOf("android") + 8)) < 4) {
+            targetDensitydpi = DEFAULT_WIDTH / deviceWidth * devicePixelRatio * 160;
+            document.getElementById('view').setAttribute('content', 'target-densitydpi=' + targetDensitydpi + ', width=device-width, user-scalable=no');
+        }
+    </script>
+    <link rel="stylesheet" href="css/reset.css"/>
+    <style>
+        * {
+            font-family: PingFangSC-Regular, sans-serif;
+        }
+        .stretchBackground {
+            background: #ffb440;
+            width: 750px;
+            height: 1600px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 0;
+        }
+        .rules {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 750px;
+            height: 1240px;
+            overflow: hidden;
+            display: none;
+            background: url("img/rules.png") no-repeat;
+            background-size: 750px 1240px;
+            color: #A66953;
+            font-size: 28px;
+        }
+        .rule_1 {
+            position: absolute;
+            left: 100px;
+            top: 125px;
+        }
+        .rule_2 {
+            position: absolute;
+            left: 100px;
+            top: 661px;
+        }
+        .rule_3 {
+            position: absolute;
+            left: 100px;
+            top: 798px;
+        }
+        .rulesFirst {
+            position: absolute;
+            left: 100px;
+            top: 173px;
+        }
+        .rulesSecond {
+            position: absolute;
+            left: 100px;
+            top: 255px;
+        }
+        .rulesThird {
+            position: absolute;
+            left: 100px;
+            top: 337px;
+        }
+        table {
+            width: 545px;
+            height: 150px;
+            position: absolute;
+            left: 103px;
+            top: 460px;
+        }
+        tr {
+            width: 545px;
+            height: 75px;
+        }
+        td {
+            text-align: center;
+            line-height: 75px;
+            width: 181px;
+            height: 75px;
+            font-size: 22px;
+        }
+        .most {
+            position: absolute;
+            left: 100px;
+            top: 607px;
+        }
+        .rulesFourth {
+            position: absolute;
+            left: 100px;
+            top: 708px;
+        }
+        .rulesSixth {
+            position: absolute;
+            left: 100px;
+            top: 844px;
+        }
+        .ruleBtn {
+            width: 611px;
+            height: 130px;
+            position: absolute;
+            left: 50%;
+            top: 1006px;
+            transform: translate(-50%,0);
+            -webkit-transform: translate(-50%,0);
+        }
+        .shadow {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 750px;
+            height: 1600px;
+            background: rgba(0, 0, 0, .7);
+            z-index: 10;
+            display: none;
+        }
+        .cover {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 750px;
+            height: 1256px;
+            overflow: hidden;
+            /*display: none;*/
+            background: url("img/indexBackground.png") no-repeat;
+        }
+        .text {
+            width: 600px;
+            height: 90px;
+            background: url("img/textBackground.png") no-repeat;
+            text-align: center;
+            box-sizing: border-box;
+            padding: 12px 0;
+            position: absolute;
+            left: 50%;
+            top: 705px;
+            transform: translate(-50%,0);
+            -webkit-transform: translate(-50%,0);
+            border-radius:20px;
+            font-size: 28px;
+            color: #fff5cb;
+        }
+        .showRuleBtnClick {
+            width: 189px;
+            height: 76px;
+            position: absolute;
+            left: 493px;
+            top: 572px;
+        }
+        .process {
+            width: 610px;
+            height: 82px;
+            overflow: hidden;
+            position: absolute;
+            left: 50%;
+            top: 838px;
+            transform:translate(-50%,0);
+            -webkit-transform:translate(-50%,0);
+            border-radius: 41px;
+        }
+        .processBackgroundWhite {
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 1;
+        }
+        .processBackgroundOrange {
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 2;
+        }
+        .processCoins {
+            width: 610px;
+            height: 82px;
+            position: absolute;
+            left: 50%;
+            top: 837px;
+            transform:translate(-50%,0);
+            -webkit-transform:translate(-50%,0);
+        }
+        .processCoins span {
+            display: block;
+            position: absolute;
+            top: 0;
+            width: 82px;
+            height: 82px;
+            z-index: 3;
+            border-radius:50%;
+            background: url("img/processCoin.png") no-repeat;
+            background-position-y: 0;
+        }
+        .coinAnimation {
+            animation: coinAnimation 3s infinite;
+            -webkit-animation: coinAnimation 3s infinite;
+        }
+        @keyframes coinAnimation {
+            0% {
+                transform: translate(0,0);
+                -webkit-transform: translate(0,0);
+            }
+            4% {
+                transform: translate(-4px,0);
+                -webkit-transform: translate(-4px,0);
+            }
+            12% {
+                transform: translate(4px,0);
+                -webkit-transform: translate(4px,0);
+            }
+            20% {
+                transform: translate(-4px,0);
+                -webkit-transform: translate(-4px,0);
+            }
+            28% {
+                transform: translate(0,0) scale(1);
+                -webkit-transform: translate(0,0) scale(1);
+            }
+            34.25% {
+                transform: scale(1.2);
+                -webkit-transform: scale(1.2);
+            }
+            40.5% {
+                transform: scale(1);
+                -webkit-transform: scale(1);
+            }
+        }
+        @-webkit-keyframes coinAnimation {
+            0% {
+                transform: translate(0,0);
+                -webkit-transform: translate(0,0);
+            }
+            4% {
+                transform: translate(-4px,0);
+                -webkit-transform: translate(-4px,0);
+            }
+            12% {
+                transform: translate(4px,0);
+                -webkit-transform: translate(4px,0);
+            }
+            20% {
+                transform: translate(-4px,0);
+                -webkit-transform: translate(-4px,0);
+            }
+            28% {
+                transform: translate(0,0) scale(1);
+                -webkit-transform: translate(0,0) scale(1);
+            }
+            34.25% {
+                transform: scale(1.5);
+                -webkit-transform: scale(1.5);
+            }
+            40.5% {
+                transform: scale(1);
+                -webkit-transform: scale(1);
+            }
+        }
+        .processCoinStatus p {
+            width: 83px;
+            text-align: center;
+            position: absolute;
+            top: 910px;
+            font-size: 20px;
+        }
+        .btn,.preventBtnClickMore {
+            width: 611px;
+            height: 134px;
+            position: absolute;
+            left: 50%;
+            top: 1000px;
+            transform:translate(-50%,0);
+            -webkit-transform:translate(-50%,0);
+        }
+        .preventBtnClickMore {
+            display: none;
+        }
+        .btnOfWaitPrize,.btnOfGetPrize,.btnOfEnd,.btnOfCheckPrize {
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: none;
+        }
+        .btnOfShareGetMoney {
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: block;
+        }
+        .friendListIsNone {
+            position: absolute;
+            left: 50%;
+            top: 1258px;
+            transform:translate(-50%,0);
+            -webkit-transform:translate(-50%,0);
+        }
+        .friendListShow {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            width: 602px;
+            position: absolute;
+            left: 50%;
+            top: 1360px;
+            z-index: 2;
+            transform:translate(-50%,0);
+            -webkit-transform:translate(-50%,0);
+            background: #FEFCF2;
+            display: none;
+        }
+        .friendListShow li {
+            padding: 0;
+            margin: 0;
+            width: 604px;
+            height: 112px;
+            border-top: 1px #e8e6de solid;
+            position: relative;
+            left: -1px;
+            /*解决白边问题*/
+            top: 0;
+            overflow: hidden;
+            background: url("img/liBackground.png") no-repeat;
+        }
+        .friendListShow .liLastBackground {
+            background: url("img/liLastBackground.png") no-repeat 0 -6px;
+            border-bottom: none;
+        }
+        li>.order {
+            display: block;
+            width:32px;
+            text-align: left;
+            height: 30px;
+            line-height: 30px;
+            position: absolute;
+            left: 32px;
+            top: 50%;
+            transform:translate(0,-50%);
+            -webkit-transform:translate(0,-50%);
+            font-size: 22px;
+        }
+        li>.headPicture {
+            width: 73px;
+            height: 73px;
+            position: absolute;
+            left: 68px;
+            top: 20px;
+        }
+        li>.friendName {
+            white-space:nowrap;
+            width:170px;
+            overflow:hidden;
+            text-overflow:ellipsis;
+            display: inline-block;
+            position: absolute;
+            left:160px;
+            top: 50%;
+            transform: translate(0,-50%);
+            -webkit-transform: translate(0,-50%);
+            line-height: 30px;
+            text-align: left;
+            font-size: 24px;
+            color: #2b2b2b;
+        }
+        li>.listTime {
+            width: 220px;
+            display: inline-block;
+            position: absolute;
+            left: 346px;
+            top: 50%;
+            transform: translate(0,-50%);
+            -webkit-transform: translate(0,-50%);
+            line-height: 30px;
+            text-align: left;
+            font-size: 22px;
+            color: #2b2b2b;
+        }
+        li>.isInvert {
+            padding: 6px 15px;
+            background: #e8e6de;
+            display: inline-block;
+            color: #805c92;
+            font-size: 20px;
+            border-radius:0 0 10px 10px;
+            position: absolute;
+            right: 10px;
+            top: 0;
+        }
+
+        .goRecharge {
+            width: 641px;
+            height: 718px;
+            background: url("img/goRecharge.png") no-repeat;
+            position: fixed;
+            left: 50%;
+            top:50%;
+            transform:translate(-50%,-50%);
+            -webkit-transform:translate(-50%,-50%);
+            z-index: 11;
+            display: none;
+        }
+        .goRecharge>p:nth-of-type(1){
+            width: 450px;
+            height: 164px;
+            position: absolute;
+            left: 50%;
+            top: 355px;
+            transform:translate(-50%,0);
+            -webkit-transform:translate(-50%,0);
+            text-align: center;
+            font-size: 30px;
+            line-height: 45px;
+            color: #2b2b2b;
+        }
+        .goRechargeBtn {
+            position: absolute;
+            left: 50%;
+            top: 540px;
+            transform:translate(-50%,0);
+            -webkit-transform:translate(-50%,0);
+            z-index: 2;
+        }
+        .activityEndAlert {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            -webkit-transform: translate(-50%,-50%);
+            z-index: 100;
+            display: none;
+        }
+        .activityEndAlertShadow {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 750px;
+            height: 1600px;
+            z-index: 99;
+            background: rgba(0,0,0,.7);
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div id="wrap_contain">
+    <div class="stretchBackground">
+        <img src="img/friendListIsNone.png" class="friendListIsNone"/>
+        <ul class="friendListShow"></ul>
+    </div>
+    <div class="shadow"></div>
+    <div class="rules">
+        <p class="rule_1" style="font-weight: bold">如何获得奖励？</p>
+        <p class="rule_2" style="font-weight: bold">何时结束？</p>
+        <p class="rule_3" style="font-weight: bold">如何领奖？</p>
+        <p class="rulesFirst">本活动仅限历史累计充值≥<span></span>元以上的<br>老用户才能领取奖励。</p>
+        <p class="rulesSecond">每有一位好友通过你的分享链接注册，<br>你可获得<span></span>体验金。</p>
+        <p class="rulesThird">如果好友在活动期间内投资≥100元，<br>你得到的奖励将增长为<span></span>体验金。</p>
+
+        <table  border='1 #E55117 solid' cellspacing="0" cellpadding="0">
+            <tr>
+                <td>每当1位好友</td>
+                <td>注册</td>
+                <td>投资</td>
+            </tr>
+            <tr>
+                <td>你可获得</td>
+                <td><span></span></td>
+                <td>增长为<span></span></td>
+            </tr>
+        </table>
+
+        <p class="most" style="font-weight: bold">你最高可获得<span></span>元体验金奖励。</p>
+        <p class="rulesFourth">活动将于<span></span>年<span></span>月<span></span>日结束，结束后即可<br>领奖。</p>
+        <p class="rulesSixth">注意啦~请在 <span style="font-weight: bold"><span></span>年<span></span>月<span></span>日23:59前到本页<br>面领取</span>，逾期失效。</p>
+        <div class="ruleBtn"></div>
+    </div>
+    <div class="cover">
+        <p class="text"></p>
+        <div class="showRuleBtn"></div>
+        <div class="showRuleBtnClick"></div>
+        <div class="process">
+            <img src="img/processBackgroundOrange.png" class="processBackgroundOrange"/>
+            <img src="img/processBackgroundWhite.png" class="processBackgroundWhite"/>
+        </div>
+        <div class="processCoins">
+            <span style="left: 0;background-position-x:0;"></span>
+            <span style="left: 132px;background-position-x:-132px;"></span>
+            <span style="left: 263px;background-position-x:-264px;"></span>
+            <span style="left: 395px;background-position-x:-396px;"></span>
+            <span style="left: 529px;background-position-x:-528px;"></span>
+        </div>
+        <div class="processCoinStatus">
+            <p style="left: 70px;"></p>
+            <p style="left: 200px;"></p>
+            <p style="left: 330px;"></p>
+            <p style="left: 460px;"></p>
+            <p style="left: 590px;"></p>
+        </div>
+        <div class="btn">
+            <img src="img/btnOfGetPrize.png" class="btnOfGetPrize"/>
+            <img src="img/btnOfEnd.png" class="btnOfEnd"/>
+            <img src="img/btnOfShareGetMoney.png" class="btnOfShareGetMoney"/>
+            <img src="img/btnOfCheckPrize.png" class="btnOfCheckPrize"/>
+        </div>
+        <div class="preventBtnClickMore"></div>
+        <div class="goRecharge">
+            <p>累计充值≥<span></span>元，即可参加活动<br><span style="font-weight: bold">您还差<span></span>元</span></p>
+            <img src="img/goRechargeBtn.png" class="goRechargeBtn"/>
+        </div>
+    </div>
+    <img src="img/activityEndAlert.png" class="activityEndAlert"/>
+    <div class="activityEndAlertShadow"></div>
+    <!--UV PV 统计代码	如果需要上线之前请放出来-->
+    <!--<div style="display:none">-->
+        <!--<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','http://www.google-analytics.com/analytics.js','ga');ga('create', 'UA-69693328-1', 'auto');ga('send', 'pageview');-->
+        <!--</script>-->
+    <!--</div>-->
+</div>
+
+
+<script src="js/jquery.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/main.js"></script>
+<script>
+////    var configUrl = "http://activity.hebaodai.com/"; //正式环境
+//    var configUrl = "http://119.254.97.28:85/"; //测试环境
+
+    //    获取token值--------------------------------------------
+    var token = ''; //获取token值；
+    var teamId = "";
+    var QUEUE_HAS_MESSAGE = '';
+    var messagingIframe = null;
+
+    _createQueueReadyIframe(document);
+    function _createQueueReadyIframe(doc) {
+        messagingIframe = doc.createElement('iframe');
+        messagingIframe.style.display = 'none';
+        doc.documentElement.appendChild(messagingIframe)
+    }
+    QUEUE_HAS_MESSAGE = 'com.hebao.app/applyToken';
+    messagingIframe.src = 'hebao://' + QUEUE_HAS_MESSAGE;
+
+//    获取活动ID
+    var activityId = window.wxTools.getQuery("activityId");
+
+    var url = {
+        "GetActivityProcess":"api/InviteNewUser/GetActivityProcess?activityId="+activityId,
+        "ReceivePrize":"api/InviteNewUser/ReceivePrize?activityId="+activityId,
+        "clickCount":"api/InviteNewUser/RecordActivityClick?activityId="+activityId+"&clickSource=1"
+    };
+
+    function getToken(tokens) {
+        token = tokens;
+        init();
+    }
+
+//    与活动参数无关的事件
+    $(function () {
+
+//    规则页面切换
+        $(".showRuleBtnClick").bind("click", function () {
+            $(".rules").show();
+            $(".cover,.stretchBackground").hide();
+        });
+        $(".ruleBtn").bind("click", function () {
+            $(".cover,.stretchBackground").show();
+            $(".rules").hide();
+        });
+
+//    进度条小图标及状态
+        $.processStatus = function (currencyExperienceMoney,maxExperienceMoney) {
+            var rate = parseInt(currencyExperienceMoney)/parseInt(maxExperienceMoney);
+            if(rate == 0){
+                $(".processBackgroundOrange")[0].style.left = "0px";
+            }
+            if(rate >0 && rate <0.25){
+                $(".processBackgroundOrange")[0].style.left = "132px";
+            }
+            if(rate>=0.25 && rate <0.50){
+                $(".processBackgroundOrange")[0].style.left = "264px";
+            }
+            if(rate>=0.50 && rate <0.75){
+                $(".processBackgroundOrange")[0].style.left = "396px";
+            }
+            if(rate>=0.75 && rate <1.00){
+                $(".processBackgroundOrange")[0].style.left = "528px";
+            }
+            if(rate == 1.00){
+                $(".processBackgroundOrange")[0].style.left = "660px";
+            }
+            var index = parseInt($(".processBackgroundOrange")[0].style.left)/132;
+
+            $(".processCoins>span").eq(index).addClass("coinAnimation");
+            $(".processCoinStatus p:lt("+index+")").css("color","#fff").text("已完成");
+            $(".processCoinStatus p:eq("+index+")").css("color","#c4821b").text("未解锁");
+            $(".processCoinStatus p:gt("+index+")").css("color","#c4821b").text("未解锁");
+        };
+
+//    跳转充值界面
+        $(".goRechargeBtn").bind("click", function () {
+            window.hbTools.goRecharge();//跳转到APP充值页面
+        });
+//    弹窗后点击阴影
+        $(".shadow").bind("click", function () {
+            $(".shadow,.goRecharge").hide();
+        });
+
+//    领取奖品接口
+        $.receive = function () {
+            $.ajax({
+                type: "GET",
+                headers: {
+                    token: token
+                },
+                // url: window.Config.AppUrl + url.ReceivePrize,
+               url: "ReceivePrize.json",
+                dataType: "json",
+                success: function (response) {
+                    if(!response.Success){
+                        window.hbTools.tipsError(response);
+                    }else{
+                        window.hbTools.goPrize();//跳转到APP查看奖励页面
+                        $(".btnOfCheckPrize").show().siblings("img").hide();
+                    }
+                }
+            });
+        };
+
+//    首页按钮接口
+        $.clickCount = function () {
+            $.ajax({
+                type: "GET",
+                headers: {
+                    token: token
+                },
+                url: window.Config.AppUrl + url.clickCount,
+                dataType: "json",
+                success: function (response) {
+                    if(!response.Success){
+                        window.hbTools.tipsError(response);
+                    }
+                }
+            });
+        };
+
+//        查看奖励
+        $(".btnOfCheckPrize").bind("click", function () {
+            window.hbTools.goPrize();//跳转到APP查看奖励页面
+        });
+
+//        月份、日期清除前面的0
+        $.removeZero = function (obj) {
+            if(parseInt($(obj).text())<10){
+                $(obj).text($(obj).text().replace("0",""));
+            }
+        };
+    });
+
+    // function init(){
+        $.ajax({
+            type: "GET",
+            headers:{
+                token:token
+            },
+            // url: window.Config.AppUrl + url.GetActivityProcess,
+           url: "GetActivityProcess.json",
+            dataType: "json",
+            success:function (response) {
+                console.info(response);
+                if(!response.Success){
+                    if (response.ErrorCode == 100009 || response.ErrorCode == 100011) {
+                        $(".activityEndAlert,.activityEndAlertShadow").show();
+                    }
+                }else{
+//            与活动状态无关的
+                    $(function () {
+//                        规则页面部分
+                        $(function () {
+                            $(".rulesFirst span").text(response.Data.Activity.QualifieAmount);//参与活动的最低资格
+                            $(".rulesSecond span,table tr span:eq(0)").text(response.Data.Activity.RegisterExperienceAmount);//活动有好友注册时，获取的体验金奖励
+                            $(".rulesThird span,table tr span:eq(1)").text(response.Data.Activity.InvestmentExperienceAmount);//活动有好友投资时，获取的体验金奖励
+                            $(".rules .most span").text(response.Data.Activity.MaxExperienceAmount);//活动可获得的最高体验金奖励
+
+//                        活动最后的领取时间
+                            var ary = response.Data.Activity.ReceivePrizeEndTime.split("T")[0].split("-");
+                            for(var i=1;i<=3;i++){
+                                $(".rulesSixth span").eq(i).text(ary[i-1]);
+                                $.removeZero(".rulesSixth span:eq("+i+")");
+                            }
+
+                            var aryEndTime = response.Data.Activity.EndTime.split("T")[0].split("-");
+                            for(var j=0;j<3;j++){
+                                $(".rulesFourth span").eq(j).text(aryEndTime[j]);
+                                $.removeZero(".rulesFourth span:eq("+j+")");
+                            }
+                        });
+
+//                        充值弹窗界面
+                        $(".goRecharge span:eq(0)").text(response.Data.Activity.QualifieAmount);//充值弹窗的参与活动最低资格
+                        $(".goRecharge span:eq(2)").text(response.Data.QualifiedDiffAmount);//充值弹窗界面缺少条件提示
+
+//                        领奖按钮,调领奖接口
+                        $(".btnOfGetPrize").bind("click", function () {
+                            $(".preventBtnClickMore").show().delay(2000).fadeOut();//防止多次点击，领奖多次
+                            $.receive();
+                        });
+
+                        if(response.Data.Team != null){
+                            teamId = response.Data.Team.TeamId;//获取团队ID；
+                            $.processStatus(response.Data.Team.ExperienceAmount,response.Data.Activity.MaxExperienceAmount);//进度条状态
+                        }
+                    });
+
+//            与活动状态相关的，活动正在进行，活动状态为1
+                    $(function () {
+                        if(response.Data.Activity.ActivityState == 1){
+
+//                            text和btn的文案
+                            if(response.Data.Team.ExperienceAmount == 0){
+                                $(".text").html("让更多人加入荷包<br>奖励就会越多，荷小包就会更开心啦！").css("line-height","33px");
+                            }
+                            if(response.Data.Team.ExperienceAmount > 0 && response.Data.Team.ExperienceAmount < 10000){
+                                $(".text").html("已解锁<span style='color: #E55117;'></span>体验金奖励<br><span style='color: #E55117;'><span></span>月<span></span>日</span>即可领奖").css("line-height","33px");
+                                $(".text>span:eq(0)").text(response.Data.Team.ExperienceAmount);//该状态下text已解锁的体验金金额
+                                $(".text>span>span:eq(0)").text(response.Data.Activity.EndTime.split("T")[0].split("-")[1]);//该状态下text的时间--月份
+                                $.removeZero(".text>span>span:eq(0)");//清除月份前面的0；
+                                $(".text>span>span:eq(1)").text(response.Data.Activity.EndTime.split("T")[0].split("-")[2]);//该状态下text的时间--日期
+                                $.removeZero(".text>span>span:eq(1)");//清除日期前面的0；
+                                $("ul").show();
+                            }
+                            if(response.Data.Team.ExperienceAmount == 10000){
+                                $(".text").html("棒呆了！<br>你将获最高奖励<span style='color: #E55117;'>10000</span>元体验金").css("line-height","33px");
+                                $("ul").show();
+                                $(".btnOfShareGetMoney ").show().siblings("img").hide();
+                            }
+
+    //                若没有参加活动的资格
+                            if(!response.Data.IsQualified){
+                                $(".btnOfShareGetMoney").bind("click", function () {
+                                    $(".goRecharge,.shadow").show();
+                                })
+                            }else{
+    //                有资格参与则分享朋友圈或微信好友
+                                $(".btnOfShareGetMoney").bind("click", function () {
+                                    $(".preventBtnClickMore").show().delay(2000).fadeOut();//防止多次点击，领奖多次
+                                    window.hbTools.shareFriend();
+                                    $.clickCount();
+                                })
+                            }
+                        }
+                    });
+
+//            与活动状态相关的，活动已经结束，活动状态为2
+                    $(function () {
+                        if(response.Data.Activity.ActivityState == 2){
+
+                            if(response.Data.Team != null){
+//                    有参与活动的，活动结束，没有奖励
+                                if(response.Data.Team.ExperienceAmount == 0){
+                                    $(".text").html("呜呜呜~这次没有获得奖励，<br>下次再来参与吧！").css("line-height","33px");
+                                    $(".btnOfEnd").show().siblings("img").hide();
+                                    $(".friendListIsNone").show().siblings("ul").hide();
+                                }
+//                    有参与活动的，活动结束，有奖励，没领取
+                                if(response.Data.Team.ExperienceAmount != 0 && !response.Data.IsReceived){
+                                    $(".btnOfGetPrize").show().siblings("img").hide();
+                                    $(".text").html("获得<span style='color:#E55117'></span>体验金奖励！").css("line-height","66px");
+                                    $(".text>span:eq(0)").text(response.Data.Team.ExperienceAmount);
+                                    $("ul").show();
+                                }
+//                    有参与活动的，活动结束，有奖励，领取了
+                                if(response.Data.Team.ExperienceAmount != 0 && response.Data.IsReceived){
+                                    $(".btnOfCheckPrize").show().siblings("img").hide();
+                                    $(".text").html("获得<span style='color:#E55117'></span>体验金奖励！").css("line-height","66px");
+                                    $(".text>span:eq(0)").text(response.Data.Team.ExperienceAmount);
+                                    $("ul").show();
+                                }
+                            }
+//                            没有参与活动的，活动结束
+                            if(response.Data.Team == null){
+                                $(".text").html("呜呜呜~这次没有获得奖励，<br>下次再来参与吧！").css("line-height","33px");
+                                $(".btnOfEnd").show().siblings("img").hide();
+                                $(".friendListIsNone").show().siblings("ul").hide();
+                                $(".processCoins>span").eq(0).addClass("coinAnimation");
+                            }
+                        }
+                    });
+//            获取成员列表
+                    $(function () {
+                        if(response.Data.Team != null){
+                            var ary = response.Data.Team.TeamMembers;
+                            var html = " ";
+                            for(var i in ary){
+                                if(ary[i].NickName == (null||"")){
+                                    ary[i].NickName = " ";
+                                }
+                                if (ary[i].RegisterDate) {
+                                    ary[i].RegisterDate = ary[i].RegisterDate.split("+")[0].replace("T"," ");
+                                }
+                                html += "<li><span class=\"order\"></span><img src=" + ary[i].Avatar + " class=\"headPicture\"/><div class=\"isInvert\">已投资</div><div class=\"friendName\">" + ary[i].NickName + "</div><div class=\"listTime\">" + ary[i].RegisterDate + "</div></li>"
+                            }
+                            //            将成员列表插入ul标签中
+                            $(".friendListShow").html(html);
+
+                            if($("li").length>0){
+                                $(".stretchBackground").height(1600+($("li").length-1)*112);
+                            }
+//                        当li标签超过4个时，最后一个的li标签不给下边框
+                            if($("li").length>=5){
+                                $("li:last").css("border-bottom","none");
+                            }
+
+                            $("li:last").addClass("liLastBackground").css("border-bottom","none");
+
+//                好友列表的顺序
+                            for(var i=0;i<$("li").length;i++){
+                                $("ul .order").eq(i).text(i+1)
+                            }
+//                判定已投资图标的出现
+                            for (var j in ary) {
+                                if (ary[j].IsInvestment) {
+                                    $(".friendListShow .isInvert").eq(j).show();
+                                } else {
+                                    $(".friendListShow .isInvert").eq(j).hide();
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    // }
+
+</script>
+</body>
+</html>

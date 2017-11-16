@@ -1,0 +1,836 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta id="view" name="viewport" content="target-densitydpi=device-dpi, width=750px, user-scalable=no">
+    <!--不可以用手指缩放-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" /> <!--防止呼叫-->
+    <script type="text/javascript">
+        var DEFAULT_WIDTH = 750,
+                ua = navigator.userAgent.toLowerCase(), // 根据 user agent 的信息获取浏览器信息
+                deviceWidth = window.screen.width, // 设备的宽度
+                devicePixelRatio = window.devicePixelRatio || 1, // 物理像素和设备独立像素的比例，默认为1
+                targetDensitydpi;
+        // Android4.0以下手机不支持viewport的width，需要设置target-densitydpi
+        if (ua.indexOf("android") !== -1 && parseFloat(ua.slice(ua.indexOf("android") + 8)) < 4) {
+            targetDensitydpi = DEFAULT_WIDTH / deviceWidth * devicePixelRatio * 160;
+            document.getElementById('view').setAttribute('content', 'target-densitydpi=' + targetDensitydpi + ', width=device-width, user-scalable=no');
+        }
+    </script>
+    <style>
+        .rules {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 750px;
+            height: 1240px;
+            overflow: hidden;
+            display: none;
+            background: url("img/rules.png") no-repeat;
+            background-size: 750px 1240px;
+            color: #e56630;
+            font-size: 28px;
+            font-family: 宋体;
+        }
+        .rule_1 {
+            position: absolute;
+            left: 100px;
+            top: 125px;
+        }
+        .rule_2 {
+            position: absolute;
+            left: 100px;
+            top: 663px;
+        }
+        .rule_3 {
+            position: absolute;
+            left: 100px;
+            top: 778px;
+        }
+
+        .rulesFirst {
+            position: absolute;
+            left: 100px;
+            top: 173px;
+        }
+        .rulesSecond {
+            position: absolute;
+            left: 100px;
+            top: 255px;
+        }
+        .rulesThird {
+            position: absolute;
+            left: 100px;
+            top: 337px;
+        }
+        table {
+            width: 545px;
+            height: 150px;
+            position: absolute;
+            left: 103px;
+            top: 460px;
+            border: 1px #e56630 solid;
+        }
+        tr {
+            width: 545px;
+            height: 75px;
+        }
+        td {
+            text-align: center;
+            line-height: 75px;
+            width: 181px;
+            height: 75px;
+            font-size: 22px;
+        }
+        .most {
+            position: absolute;
+            left: 100px;
+            top: 607px;
+        }
+        .rulesFourth {
+            position: absolute;
+            left: 100px;
+            top: 710px;
+        }
+        .rulesSixth {
+            position: absolute;
+            left: 100px;
+            top: 824px;
+        }
+        .ruleBtn {
+            width: 611px;
+            height: 130px;
+            position: absolute;
+            left: 50%;
+            top: 1006px;
+            transform: translate(-50%,0);
+            -webkit-transform: translate(-50%,0);
+        }
+
+
+        .shadow {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 750px;
+            height: 1964px;
+            background: rgba(0, 0, 0, .7);
+            z-index: 10;
+            display: none;
+        }
+        .cover {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 750px;
+            height: 1964px;
+            overflow: hidden;
+            /*display: none;*/
+            background: url("img/indexBackground.png") no-repeat;
+        }
+        .text {
+            width: 600px;
+            height: 90px;
+            background: rgba(0, 0, 0, .05);
+            text-align: center;
+            box-sizing: border-box;
+            padding: 12px 0;
+            position: absolute;
+            left: 50%;
+            top: 705px;
+            transform: translate(-50%,0);
+            -webkit-transform: translate(-50%,0);
+            border-radius:20px;
+            font-size: 28px;
+            color: #fff5cb;
+        }
+        .showRuleBtn {
+            background: url("img/showRuleBtn.png") no-repeat;
+            width: 195px;
+            height: 332px;
+            position: absolute;
+            left: 494px;
+            top: 355px;
+        }
+        .showRuleBtnClick {
+            width: 189px;
+            height: 76px;
+            position: absolute;
+            left: 507px;
+            top: 585px;
+        }
+        .process {
+            width: 610px;
+            height: 82px;
+            overflow: hidden;
+            position: absolute;
+            left: 50%;
+            top: 837px;
+            transform:translate(-50%,0);
+            -webkit-transform:translate(-50%,0);
+            border-radius: 41px;
+        }
+        .processBackgroundWhite {
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 1;
+        }
+        .processBackgroundOrange {
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 2;
+        }
+        .processCoins {
+            width: 610px;
+            height: 82px;
+            position: absolute;
+            left: 50%;
+            top: 837px;
+            transform:translate(-50%,0);
+            -webkit-transform:translate(-50%,0);
+        }
+        .processCoins span {
+            display: block;
+            position: absolute;
+            top: 0;
+            width: 82px;
+            height: 82px;
+            z-index: 3;
+            border-radius:50%;
+            background: url("img/processCoin.png") no-repeat;
+            background-position-y: 0;
+        }
+        .coinAnimation {
+            animation: coinAnimation 3s infinite;
+            -webkit-animation: coinAnimation 3s infinite;
+        }
+        @keyframes coinAnimation {
+            0% {
+                transform: translate(0,0);
+                -webkit-transform: translate(0,0);
+            }
+            4% {
+                transform: translate(-4px,0);
+                -webkit-transform: translate(-4px,0);
+            }
+            12% {
+                transform: translate(4px,0);
+                -webkit-transform: translate(4px,0);
+            }
+            20% {
+                transform: translate(-4px,0);
+                -webkit-transform: translate(-4px,0);
+            }
+            28% {
+                transform: translate(0,0) scale(1);
+                -webkit-transform: translate(0,0) scale(1);
+            }
+            34.25% {
+                transform: scale(1.5);
+                -webkit-transform: scale(1.5);
+            }
+            40.5% {
+                transform: scale(1);
+                -webkit-transform: scale(1);
+            }
+        }
+        @-webkit-keyframes coinAnimation {
+            0% {
+                transform: translate(0,0);
+                -webkit-transform: translate(0,0);
+            }
+            4% {
+                transform: translate(-4px,0);
+                -webkit-transform: translate(-4px,0);
+            }
+            12% {
+                transform: translate(4px,0);
+                -webkit-transform: translate(4px,0);
+            }
+            20% {
+                transform: translate(-4px,0);
+                -webkit-transform: translate(-4px,0);
+            }
+            28% {
+                transform: translate(0,0) scale(1);
+                -webkit-transform: translate(0,0) scale(1);
+            }
+            34.25% {
+                transform: scale(1.5);
+                -webkit-transform: scale(1.5);
+            }
+            40.5% {
+                transform: scale(1);
+                -webkit-transform: scale(1);
+            }
+        }
+        .processCoinStatus p {
+            width: 83px;
+            text-align: center;
+            position: absolute;
+            top: 935px;
+            font-size: 20px;
+        }
+        .btn {
+            width: 611px;
+            height: 134px;
+            position: absolute;
+            left: 50%;
+            top: 1000px;
+            transform:translate(-50%,0);
+            -webkit-transform:translate(-50%,0);
+        }
+        .btnOfWaitPrize,.btnOfGetPrize,.btnOfEnd {
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: none;
+        }
+        .btnOfShareGetMoney {
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: block;
+        }
+        .friendList{
+            width: 604px;
+            height: 564px;
+            position: absolute;
+            left: 50%;
+            top: 1258px;
+            transform:translate(-50%,0);
+            -webkit-transform:translate(-50%,0);
+        }
+        .friendListIsNone {
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: none;
+        }
+        .friendListIsOk {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        .friendListShow {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            width: 604px;
+            height: 462px;
+            position: absolute;
+            left: 0;
+            top: 102px;
+            overflow: scroll;
+        }
+        .friendListShow li {
+            width: 604px;
+            height: 110px;
+            border-bottom: 1px gray solid;
+            position: relative;
+            left: 0;
+            top: 0;
+            overflow: hidden;
+        }
+        li>.order {
+            display: block;
+            width:32px;
+            text-align: left;
+            height: 30px;
+            line-height: 30px;
+            position: absolute;
+            left: 32px;
+            top: 50%;
+            transform:translate(0,-50%);
+            -webkit-transform:translate(0,-50%);
+            font-size: 22px;
+        }
+        li>.headPicture {
+            width: 73px;
+            height: 73px;
+            position: absolute;
+            left: 68px;
+            top: 20px;
+            border: 1px black solid;
+        }
+        li>.friendName {
+            display: inline-block;
+            position: absolute;
+            left:160px;
+            top: 50%;
+            transform: translate(0,-50%);
+            -webkit-transform: translate(0,-50%);
+            line-height: 30px;
+            text-align: left;
+            font-size: 24px;
+            color: #2b2b2b;
+        }
+        li>.listTime {
+            width: 209px;
+            display: inline-block;
+            position: absolute;
+            left: 384px;
+            top: 50%;
+            transform: translate(0,-50%);
+            -webkit-transform: translate(0,-50%);
+            line-height: 30px;
+            text-align: left;
+            font-size: 22px;
+            color: #2b2b2b;
+        }
+        .isInvert {
+            padding: 6px 15px;
+            background: rgba(0, 0, 0, .15);
+            display: inline-block;
+            color: #805c92;
+            font-size: 20px;
+            border-radius:0 0 10px 10px;
+            position: absolute;
+            right: 10px;
+            top: 0;
+        }
+        .goRecharge {
+            width: 641px;
+            height: 718px;
+            background: url("img/goRecharge.png") no-repeat;
+            position: fixed;
+            left: 50%;
+            top:50%;
+            transform:translate(-50%,-50%);
+            -webkit-transform:translate(-50%,-50%);
+            z-index: 11;
+            display: none;
+        }
+        .goRecharge>p:nth-of-type(1){
+            position: absolute;
+            left: 100px;
+            top: 255px;
+            font-size: 19px;
+            color: #2b2b2b;
+        }
+        .goRecharge>p:nth-of-type(2){
+            width: 393px;
+            height: 164px;
+            position: absolute;
+            left: 50%;
+            top: 355px;
+            transform:translate(-50%,0);
+            -webkit-transform:translate(-50%,0);
+            text-align: center;
+            font-size: 30px;
+            line-height: 45px;
+            color: #2b2b2b;
+        }
+        .goRechargeBtn {
+            position: absolute;
+            left: 50%;
+            top: 540px;
+            transform:translate(-50%,0);
+            -webkit-transform:translate(-50%,0);
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Writer Your Code -->
+    <div class="shadow"></div>
+    <div class="rules">
+        <p class="rule_1">如何获得奖励？</p>
+        <p class="rule_2">何时结束？</p>
+        <p class="rule_3">如何领奖？</p>
+        <p class="rulesFirst">本活动仅限历史累计充值大于≥1000元以上的<br>老用户才能领取奖励。</p>
+        <p class="rulesSecond">  每有一位好友通过你的分享链接注册。<br>你可获得<span>XXX</span>体验金</p>
+        <p class="rulesThird">如果好友在活动期间内投资，<br>你得到的奖励将增长为<span>XXX</span>体验金</p>
+
+        <table  border='1 #e56630 solid' cellspacing="0" cellpadding="0">
+            <tr>
+                <td>每当1位好友</td>
+                <td>注册</td>
+                <td>投资</td>
+            </tr>
+            <tr>
+                <td>你可获得</td>
+                <td>XXX</td>
+                <td>增长为<span>XXX</span></td>
+            </tr>
+        </table>
+
+        <p class="most">你最高可获得<span>10000</span>元体验金奖励</p>
+        <p class="rulesFourth">活动结束，即可领奖</p>
+        <p class="rulesSixth">注意啦~请在 <span>2017年<span>X</span>月<span>X</span>日23:59前到本页面领<br>取</span>，逾期失效。</p>
+        <div class="ruleBtn"></div>
+    </div>
+    <div class="cover">
+        <p class="text"></p>
+        <div class="showRuleBtn"></div>
+        <div class="showRuleBtnClick"></div>
+        <div class="process">
+            <img src="img/processBackgroundOrange.png" class="processBackgroundOrange"/>
+            <img src="img/processBackgroundWhite.png" class="processBackgroundWhite"/>
+        </div>
+        <div class="processCoins">
+            <span style="left: 0;background-position-x:0;"></span>
+            <span style="left: 132px;background-position-x:-132px;"></span>
+            <span style="left: 263px;background-position-x:-264px;"></span>
+            <span style="left: 395px;background-position-x:-396px;"></span>
+            <span style="left: 529px;background-position-x:-528px;"></span>
+        </div>
+
+        <div class="processCoinStatus">
+            <p style="left: 70px;"></p>
+            <p style="left: 200px;"></p>
+            <p style="left: 330px;"></p>
+            <p style="left: 460px;"></p>
+            <p style="left: 590px;"></p>
+        </div>
+        <div class="btn">
+            <img src="img/btnOfWaitPrize.png" class="btnOfWaitPrize"/>
+            <img src="img/btnOfGetPrize.png" class="btnOfGetPrize"/>
+            <img src="img/btnOfEnd.png" class="btnOfEnd"/>
+            <img src="img/btnOfShareGetMoney.png" class="btnOfShareGetMoney"/>
+        </div>
+        <div class="friendList">
+            <img src="img/friendListIsNone.png" class="friendListIsNone"/>
+            <img src="img/friendListIsOk.png" class="friendListIsOk"/>
+            <ul class="friendListShow"></ul>
+        </div>
+        <div class="goRecharge">
+            <p>第<span></span>位乘坐荷包列车的旅客</p>
+            <p>累计充值≥1000元<br>即可拿走奖励<br><span style="font-weight: bold">您还差<span></span>元即可领奖</span></p>
+            <img src="img/goRechargeBtn.png" class="goRechargeBtn"/>
+        </div>
+    </div>
+</div>
+<!--
+	UV PV 统计代码	如果需要上线之前请放出来
+	<div style="display:none">
+		<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','http://www.google-analytics.com/analytics.js','ga');ga('create', 'UA-69693328-1', 'auto');ga('send', 'pageview');
+		</script>
+	</div> -->
+</body>
+<!-- 如果有微信需要授权就解开注释-->
+<!-- <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script> -->
+<script src="js/jquery.min.js"></script>
+<script src='js/config.js'></script>
+<script src='js/main.js'></script>
+<script>
+    ~(function(){
+        //  Writer Your Code
+        //    var configUrl = "http://activity.hebaodai.com/"; //正式环境
+        var configUrl = "http://119.254.97.28:85/"; //测试环境
+
+//        var url = {
+//            "GetActivityProcess":"api/TowAnniversaryPiano/GetActivityProcess",
+//            "GetRandomPiano":"api/TowAnniversaryPiano/GetRandomPiano",
+//            "memberId":"api/TowAnniversaryPiano/GetPiano?memberId={memberId}",
+//            "ReceivePrize":"api/TowAnniversaryPiano/ReceivePrize",
+//            "Share":"api/TowAnniversaryPiano/Share",
+//            "ShareSuccess":"api/TowAnniversaryPiano/ShareSuccess"
+//        };
+
+        //    获取token值--------------------------------------------
+        var token = ''; //获取token值；
+        var teamID = "";
+        var QUEUE_HAS_MESSAGE = '';
+        var messagingIframe = null;
+
+        _createQueueReadyIframe(document);
+        function _createQueueReadyIframe(doc) {
+            messagingIframe = doc.createElement('iframe');
+            messagingIframe.style.display = 'none';
+            doc.documentElement.appendChild(messagingIframe)
+        }
+        QUEUE_HAS_MESSAGE = 'com.hebao.app/applyToken';
+        messagingIframe.src = 'hebao://' + QUEUE_HAS_MESSAGE;
+
+        function tipsError(res) {
+            var Message;
+            if(res.ErrorMessage) {
+                alert(res.ErrorMessage);
+                return;
+            }
+            switch(res.ErrorCode) {
+                case '100001':
+                    Message = '该用户已参加过活动'
+                    break;
+                case '100002':
+                    Message = '该手机号已参加过活动'
+                    break;
+                case '100003':
+                    Message = '手机号未注册'
+                    break;
+                case '100004':
+                    Message = '部分用户发送体验金失败'
+                    break;
+                case '100005':
+                    Message = '数据异常'
+                    break;
+                case '100006':
+                    Message = '活动等级配置错误'
+                    break;
+                case '100007':
+                    Message = '未参加活动不能得奖'
+                    break;
+                case '100008':
+                    Message = '活动未开始'
+                    break;
+                case '100009':
+                    Message = '活动已结束'
+                    break;
+                case '100010':
+                    Message = '活动领奖时间到期'
+                    break;
+                case '100011':
+                    Message = '活动已下线'
+                    break;
+                case '100012':
+                    Message = '奖品不足'
+                    break;
+                case '100013':
+                    Message = '获取用户数据异常'
+                    break;
+                case '100014':
+                    Message = '不可重复领奖'
+                    break;
+                case '100015':
+                    Message = '名称已存在'
+                    break;
+                case '100016':
+                    Message = '没有资格参加活动'
+                    break;
+                case '100017':
+                    Message = '用户没有获得到奖励'
+                    break;
+                case '100018':
+                    Message = '名称非法'
+                    break;
+                case '100019':
+                    Message = '活动没到领奖时间'
+                    break;
+                case '100020':
+                    Message = '密码不符合规范'
+                    break;
+                case '100021':
+                    Message = '手机号码格式不正确'
+                    break;
+                case '100022':
+                    Message = '验证码不正确'
+                    break;
+                case '100101':
+                    Message = '用户已经存在团队'
+                    break;
+                case '100102':
+                    Message = '团队ID不能为空'
+                    break;
+                case '100103':
+                    Message = '团队找不到'
+                    break;
+                case '100104':
+                    Message = '团队人数已满'
+                    break;
+                case '100105':
+                    Message = '成员找不到'
+                    break;
+                default:
+                    Message = 'error';
+                    break;
+            }
+            alert(Message)
+        }
+
+
+//    function getToken(tokens) {
+//        token = tokens;
+//        init();
+//    }
+
+//    与状态无关的事件
+        $(function () {
+//    规则页面切换
+            $(".showRuleBtnClick").bind("click", function () {
+                $(".rules").show();
+                $(".cover").hide();
+            });
+            $(".ruleBtn").bind("click", function () {
+                $(".cover").show();
+                $(".rules").hide();
+            });
+
+//    进度条小图标及状态
+            $.processStatus = function (experienceMoney) {
+                var experienceMoney = parseInt(experienceMoney)/2500;
+                if(experienceMoney == 0){
+                    $(".processBackgroundOrange")[0].style.left = "0px";
+                }
+                if(experienceMoney >0 && experienceMoney <=1){
+                    $(".processBackgroundOrange")[0].style.left = "132px";
+                }
+                if(experienceMoney>1 && experienceMoney <=2){
+                    $(".processBackgroundOrange")[0].style.left = "264px";
+                }
+                if(experienceMoney>2 && experienceMoney <=3){
+                    $(".processBackgroundOrange")[0].style.left = "396px";
+                }
+                if(experienceMoney>3 && experienceMoney <4){
+                    $(".processBackgroundOrange")[0].style.left = "528px";
+                }
+                if(experienceMoney == 4){
+                    $(".processBackgroundOrange")[0].style.left = "660px";
+                }
+                var index = parseInt($(".processBackgroundOrange")[0].style.left)/132;
+
+                $(".processCoins>span").eq(index).addClass("coinAnimation");
+                $(".processCoinStatus p:lt("+index+")").css("color","#fff").text("已完成");
+                $(".processCoinStatus p:eq("+index+")").css("color","#c4821b").text("未解锁");
+                $(".processCoinStatus p:gt("+index+")").css("color","#c4821b").text("未解锁");
+            };
+
+//    跳转充值界面
+            $(".goRechargeBtn").bind("click", function () {
+                window.hbTools.goRecharge();
+            });
+
+//    领取奖品接口
+            $.receive = function () {
+                $.ajax({
+                    type: "GET",
+                    headers: {
+                        token: token
+                    },
+                    url: "ReceivePrize.json",
+                    dataType: "json",
+                    success: function (response) {
+                        if(!response.Success){
+                            tipsError(response);
+                        }
+                    }
+                });
+            };
+
+//    查看奖励
+            $(".btnOfCheckPrize").bind("click", function () {
+                window.location.href="hebao://com.hebao.app/myPrize";//跳转到 查看奖励页面;
+            });
+
+//    APP分享朋友圈或好友
+            window.hbTools.shareFriend();
+        });
+
+//    function init(){
+        $.ajax({
+            type: "GET",
+            headers:{
+                token:token
+            },
+            url: "GetActivityProcess.json",
+            dataType: "json",
+            success:function (response) {
+                if(!response.Success){
+                    tipsError(response);
+                }else{
+//                与活动状态无关的
+                    $(function () {
+                        teamID = response.Data.Team.TeamId;//获取teamID；
+                        $.processStatus(response.Data.Team.ExperienceAmount);//进度条状态
+                        $(".goRecharge p:eq(0) span").text(response.Data.Team.Order);//充值弹窗界面乘客排序提示
+                        $(".goRecharge p:eq(1) span:eq(1)").text(response.Data.QualifiedDiffAmount);//充值弹窗界面缺少条件提示
+//                text的文案
+                        if(response.Data.Team.ExperienceAmount == 0){
+                            $(".text").html("让更多人加入荷包<br>奖励就会越多，荷小包就会更开心啦！");
+                            $(".friendListIsNone").show().siblings("img,ul").hide();
+                        }
+                        if(response.Data.Team.ExperienceAmount > 0 && response.Data.Team.ExperienceAmount < 10000){
+                            $(".text").html("已解锁<span style='color: #f00;'></span>体验金奖励<br><span style='color: #f00;'>X</span>月<span style='color: #f00;'>X</span>日即可领奖");
+                            $(".text>span:eq(0)").text(response.Data.Team.ExperienceAmount);
+                            $(".friendListIsOk,ul").show().siblings(".friendListIsNone").hide();
+                        }
+                        if(response.Data.Team.ExperienceAmount == 10000){
+                            $(".text").html("棒呆了！<br>你将获最高奖励10000元体验金");
+                            $(".friendListIsOk,ul").show().siblings(".friendListIsNone").hide();
+                        }
+//                  领奖按钮,调领奖接口
+                        $(".btnOfGetPrize").bind("click", $.receive);
+
+                    });
+
+//                与活动状态相关的，活动正在进行，活动状态为1
+                    $(function () {
+                        if(response.Data.ActivityState == 1){
+                            if(response.Data.Team.ExperienceAmount != 0){
+                                $(".btnOfWaitPrize").show().siblings("img").hide();//
+                            }
+
+//                若没有参加活动的资格
+                            if(!response.Data.IsQualified){
+                                $(".btnOfShareGetMoney").bind("click", function () {
+                                    $(".goRecharge,.shadow").show();
+                                })
+                            }
+                        }
+                    });
+
+//                与活动状态相关的，活动已经结束，活动状态为2
+                    $(function () {
+                        if(response.Data.ActivityState == 2){
+//                    活动结束，没有奖励
+                            if(response.Data.Team.ExperienceAmount == 0){
+                                $(".text").html("呜呜呜~这次没有获得奖励，<br>下次再来参与吧！");
+                            }
+//                    活动结束，有奖励，没领取
+                            if(response.Data.Team.ExperienceAmount != 0 && !response.Data.IsReceived){
+                                $(".btnOfGetPrize").show().siblings("img").hide();
+                                $(".text").html("获得<span style='color:#e56630'></span>体验金奖励！").css("line-height","66px");
+                                $(".text>span:eq(0)").text(response.Data.Team.ExperienceAmount);
+                            }
+//                    活动结束，有奖励，领取了
+                            if(response.Data.Team.ExperienceAmount != 0 && response.Data.IsReceived){
+                                $(".btnOfGetPrize").show().siblings("img").hide();//??????????????????是否要把领奖按钮文案改为查看奖励
+                                $(".text").html("获得<span style='color:#e56630'></span>体验金奖励！").css("line-height","66px");
+                                $(".text>span:eq(0)").text(response.Data.Team.ExperienceAmount);
+                            }
+                        }
+                    });
+
+//            获取成员列表
+                    $(function () {
+                        var ary = response.Data.Team.TeamMembers;
+                        var html = " ";
+                        for(var i in ary){
+                            if (ary[i].NickName == null) {
+                                ary[i].NickName = " ";
+                            }
+                            if (ary[i].NickName.length > 6) {
+                                ary[i].NickName = ary[i].NickName.substr(0, 5) + "... ";
+                            }
+                            if (ary[i].RegisterDate) {
+                                ary[i].RegisterDate = ary[i].RegisterDate.split(".")[0].replace("T"," ");
+                            }
+                            html += "<li><span class=\"order\"></span><img src=" + ary[i].Avatar + " class=\"headPicture\"/><div class=\"isInvert\">已投资</div><div class=\"friendName\">" + ary[i].NickName + "</div><div class=\"listTime\">" + ary[i].RegisterDate + "</div></li>"
+                        }
+//            将成员列表插入ul标签中
+                        $(".friendListShow").html(html);
+                        $("li:last").css("border-bottom","none");
+                        //    好友列表的顺序
+                        for(var i=0;i<$("li").length;i++){
+                            $("ul .order").eq(i).text(i+1)
+                        }
+//             判定已投资图标的出现
+                        for (var j in ary) {
+                            if (ary[j].IsInvestment) {
+                                $(".friendListShow .isInvert").eq(j).show();
+                            } else {
+                                $(".friendListShow .isInvert").eq(j).hide();
+                            }
+                        }
+                    });
+                }
+            }
+        });
+//    }
+    })()
+</script>
+</html>

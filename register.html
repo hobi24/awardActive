@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta id="view" name="viewport" content="target-densitydpi=device-dpi, width=750px, user-scalable=no">
+    <!--不可以用手指缩放-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="email=no" /> <!--防止呼叫-->
+    <title>解锁活动</title>
+    <link rel="stylesheet" href="css/reset.css"/>
+    <script type="text/javascript">
+        var DEFAULT_WIDTH = 750,
+                ua = navigator.userAgent.toLowerCase(), // 根据 user agent 的信息获取浏览器信息
+                deviceWidth = window.screen.width, // 设备的宽度
+                devicePixelRatio = window.devicePixelRatio || 1, // 物理像素和设备独立像素的比例，默认为1
+                targetDensitydpi;
+        // Android4.0以下手机不支持viewport的width，需要设置target-densitydpi
+        if (ua.indexOf("android") !== -1 && parseFloat(ua.slice(ua.indexOf("android") + 8)) < 4) {
+            targetDensitydpi = DEFAULT_WIDTH / deviceWidth * devicePixelRatio * 160;
+            document.getElementById('view').setAttribute('content', 'target-densitydpi=' + targetDensitydpi + ', width=device-width, user-scalable=no');
+        }
+    </script>
+    <style>
+        * {
+            font-family: PingFangSC-Regular, sans-serif;
+        }
+        #wrap_contain {
+            width: 750px;
+            height: 1862px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            overflow: hidden;
+            background: url("img/registerBakcground.png") no-repeat;
+        }
+        .inputContent{width: 606px;height:188px;margin: auto;z-index: 10;}
+        .inputContent input{width: 100%;height: 94px;font-size: 30px;padding-left: 0.375rem;-webkit-appearance:none;z-index: 10;box-sizing: border-box}
+        .marTop{position: absolute;left:50%;z-index: 10;transform: translate(-50%,634px);-webkit-transform:translate(-50%,634px);}
+        .bdt{border-top-left-radius: 15px;border-top-right-radius: 15px;border:none;z-index: 10;text-indent: 10px;}
+        .bdb{border-bottom-left-radius: 15px;border-bottom-right-radius: 15px;border:none;z-index: 10;text-indent: 10px;}
+        .line{border-bottom: 1px solid #ba9898;z-index: 10;}
+        .marCode{position: absolute;left:50%;transform: translate(-50%,842px);-webkit-transform:
+        translate(-50%,842px);z-index: 10;}
+        ::-webkit-input-placeholder {color:#d2b1b1 !important;}
+        .btn{
+            width: 604px;
+            height: 129px;
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%,978px);
+            -webkit-transform: translate(-50%,978px);
+            z-index: 10;
+        }
+        #getCode{z-index: 10;display: block;height: 94px;width: 265px;position: absolute;right: 0;
+            top: 0;border-top-right-radius: 12px;border-bottom-right-radius: 12px;background: #aa7cf7;color: #fff;text-align: center;font-size: 30px;
+            line-height: 94px;}
+        .shadow{text-align: center;position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            -webkit-transform: translate(-50%,-50%);
+            z-index: 20;color: #fff;width: 400px;
+            height: 120px;
+            display: none;
+        }
+        .shadow span{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform:translate(-50%,-50%);
+            -webkit-transform:translate(-50%,-50%);
+            box-sizing: border-box;
+            background: #111;opacity: 0.8;
+            border-radius: 15px;
+            font-size: 30px;
+            display: block;
+            width: 400px;
+            padding: 10px;
+        }
+        @media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (orientation : portrait) {
+            .line{border-bottom: 2px solid #ba9898}
+        }
+        @media only screen and (min-device-width: 414px) and (max-device-width: 736px) and (orientation : landscape) {
+            .line{border-bottom: 2px solid #ba9898}
+        }
+
+        .registerPicket {
+            width: 639px;
+            height: 499px;
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform:translate(-50%,0);
+            -webkit-transform:translate(-50%,0);
+        }
+        .registerPicket img {
+            width: 639px;
+            height: 499px;
+        }
+        .registerPicket>p {
+            position: absolute;
+            left: 89px;
+            top: 264px;
+            color: #2b2b2b;
+            font-size: 22px;
+        }
+        .train {
+            width: 1061px;
+            height: 110px;
+            background:url("img/train.png") no-repeat;
+            position: absolute;
+            top: 433px;
+            left: 750px;
+        }
+        .trainAnimation {
+            animation:train 10s 1s infinite linear;
+            -webkit-animation:train 10s 1s infinite linear;
+        }
+        @keyframes train {
+            0% {
+                transform: translate(0,0);
+                -webkit-transform: translate(0,0);
+            }
+            100% {
+                transform: translate(-1820px,0);
+                -webkit-transform: translate(-1820px,0);
+            }
+        }
+        @-webkit-keyframes train {
+            0% {
+                transform: translate(0,0);
+                -webkit-transform: translate(0,0);
+            }
+            100% {
+                transform: translate(-1820px,0);
+                -webkit-transform: translate(-1820px,0);
+            }
+        }
+        .train>p {
+            width: 495px;
+            height: 50px;
+            position: absolute;
+            left: 292px;
+            top: 3px;
+            text-align: center;
+            line-height: 50px;
+            color: #7c6035;
+            font-size: 22px;
+        }
+        .oldUserBtn {
+            width: 323px;
+            height: 36px;
+            position: absolute;
+            top: 578px;
+            right: 67px;
+        }
+        .oldUserAlert {
+            width: 640px;
+            height: 666px;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            z-index: 100;
+            transform:translate(-50%,-50%);
+            -webkit-transform:translate(-50%,-50%);
+            background: url("img/oldUserAlert.png") no-repeat;
+            text-align: center;
+            font-size: 30px;
+            line-height: 48px;
+            display: none;
+        }
+        .oldUserAlertBtn {
+            width: 513px;
+            height: 128px;
+            position: absolute;
+            bottom: 45px;
+            left: 50%;
+            transform:translate(-50%,0);
+            -webkit-transform:translate(-50%,0);
+        }
+        .oldUserAlert>p {
+            width: 400px;
+            position: absolute;
+            left: 50%;
+            top: 273px;
+            transform: translate(-50%,0);
+            -webkit-transform: translate(-50%,0);
+        }
+        .oldUserAlertShadow {
+            width: 750px;
+            height: 1862px;
+            background: rgba(0, 0, 0, .7);
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 99;
+            display:none;
+        }
+        .friendList{
+            width: 604px;
+            height: 564px;
+            position: absolute;
+            left: 50%;
+            top: 1258px;
+            transform:translate(-50%,0);
+            -webkit-transform:translate(-50%,0);
+        }
+        .friendListIsNone {
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: none;
+        }
+        .friendListIsOk {
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: none;
+        }
+        .friendListShow {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            width: 604px;
+            height: 462px;
+            position: absolute;
+            left: 0;
+            top: 102px;
+            overflow: scroll;
+            display: none;
+        }
+        .friendListShow li {
+            width: 604px;
+            height: 110px;
+            border-bottom: 1px gray solid;
+            position: relative;
+            left: 0;
+            top: 0;
+        }
+        li>.order {
+            display: block;
+            width:32px;
+            text-align: left;
+            height: 30px;
+            line-height: 30px;
+            position: absolute;
+            left: 32px;
+            top: 50%;
+            transform:translate(0,-50%);
+            -webkit-transform:translate(0,-50%);
+            font-size: 22px;
+        }
+        li>.headPicture {
+            width: 73px;
+            height: 73px;
+            position: absolute;
+            left: 68px;
+            top: 20px;
+        }
+        li>.friendName {
+            display: inline-block;
+            position: absolute;
+            left:160px;
+            top: 50%;
+            transform: translate(0,-50%);
+            -webkit-transform: translate(0,-50%);
+            line-height: 30px;
+            text-align: left;
+            font-size: 24px;
+            color: #2b2b2b;
+        }
+        li>.listTime {
+            width: 209px;
+            display: inline-block;
+            position: absolute;
+            left: 384px;
+            top: 50%;
+            transform: translate(0,-50%);
+            -webkit-transform: translate(0,-50%);
+            line-height: 30px;
+            text-align: left;
+            font-size: 22px;
+            color: #2b2b2b;
+        }
+        .isInvert {
+            padding: 6px 15px;
+            background: rgba(0, 0, 0, .15);
+            display: inline-block;
+            color: #805c92;
+            font-size: 20px;
+            border-radius:0 0 10px 10px;
+            position: absolute;
+            right: 10px;
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="wrap_contain">
+    <div class="inputContent marTop">
+        <input class="bdt line" type="tel" id="tel" placeholder="手机号码" />
+        <input class="bdb" type="password" id="password" placeholder="设置密码" max-length='15'/>
+    </div>
+    <div class="inputContent marCode">
+        <input class="bdt bdb" type="tel" id="code" max-length='6' placeholder="验证码" />
+        <span id="getCode">获取验证码</span>
+    </div>
+    <div class="btn"></div>
+    <div class="shadow">
+        <span></span>
+    </div>
+
+
+    <div class="registerPicket">
+        <img src="img/registerPicket.png"/>
+    </div>
+    <div class="train trainAnimation">
+        <p>
+            快上车，<span></span>已经为你准备5000体验金
+        </p>
+    </div>
+    <div class="oldUserBtn"></div>
+    <div class="oldUserAlert">
+        <p>
+            您已经是荷包老用户，<br>快打开荷包参与本活动，<br><span style="font-weight: bold">最高可得<span></span>体验金奖励</span>
+        </p>
+        <div class="oldUserAlertBtn"></div>
+    </div>
+    <div class="oldUserAlertShadow"></div>
+    <div class="friendList">
+        <img src="img/friendListIsNone.png" class="friendListIsNone"/>
+        <img src="img/friendListIsOk.png" class="friendListIsOk"/>
+        <ul class="friendListShow"></ul>
+    </div>
+
+</div>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js " type="text/javascript " charset="utf-8 "></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/main.js"></script>
+<script>
+
+//         测试环境配置
+         window.CONFIG = {
+             ajaxUrl : "http://120.24.230.92/test ",
+             appId: 'wx7029badd7f995cbe'
+         };
+
+    // 正式环境配置（授权部分的）
+    //    window.CONFIG = {
+    //        ajaxUrl : "http://wxhuodong.hebaofinance.com/hbjt",
+    //        appId: 'wx215fda57b90d4d55'
+    //    };
+
+//    var configUrl = "http://activity.hebaodai.com/"; //正式环境
+    var configUrl = "http://119.254.97.28:85/"; //测试环境
+
+    function tipsError(res) {
+        var Message;
+        if(res.ErrorMessage) {
+            alert(res.ErrorMessage);
+            return;
+        }
+        switch(res.ErrorCode) {
+            case '100001':
+                Message = '该用户已参加过活动'
+                break;
+            case '100002':
+                Message = '该手机号已参加过活动'
+                break;
+            case '100003':
+                Message = '手机号未注册'
+                break;
+            case '100004':
+                Message = '部分用户发送体验金失败'
+                break;
+            case '100005':
+                Message = '数据异常'
+                break;
+            case '100006':
+                Message = '活动等级配置错误'
+                break;
+            case '100007':
+                Message = '未参加活动不能得奖'
+                break;
+            case '100008':
+                Message = '活动未开始'
+                break;
+            case '100009':
+                Message = '活动已结束'
+                break;
+            case '100010':
+                Message = '活动领奖时间到期'
+                break;
+            case '100011':
+                Message = '活动已下线'
+                break;
+            case '100012':
+                Message = '奖品不足'
+                break;
+            case '100013':
+                Message = '获取用户数据异常'
+                break;
+            case '100014':
+                Message = '不可重复领奖'
+                break;
+            case '100015':
+                Message = '名称已存在'
+                break;
+            case '100016':
+                Message = '没有资格参加活动'
+                break;
+            case '100017':
+                Message = '用户没有获得到奖励'
+                break;
+            case '100018':
+                Message = '名称非法'
+                break;
+            case '100019':
+                Message = '活动没到领奖时间'
+                break;
+            case '100020':
+                Message = '密码不符合规范'
+                break;
+            case '100021':
+                Message = '手机号码格式不正确'
+                break;
+            case '100022':
+                Message = '验证码不正确'
+                break;
+            case '100101':
+                Message = '用户已经存在团队'
+                break;
+            case '100102':
+                Message = '团队ID不能为空'
+                break;
+            case '100103':
+                Message = '团队找不到'
+                break;
+            case '100104':
+                Message = '团队人数已满'
+                break;
+            case '100105':
+                Message = '成员找不到'
+                break;
+            default:
+                Message = 'error';
+                break;
+        }
+        alert(Message)
+    }
+
+
+
+    var teamId = "";
+    var activityId = "";
+    //获取链接参数（可用于获取teamId的）
+    teamId = window.wxTools.getQuery("teamId");
+    activityId = window.wxTools.getQuery("activityId");
+
+    var url = {
+        "teamID":"api/InviteNewUser/GetActivityProcess?activityId="+activityId+"&teamId="+teamId,
+        "WeChatRegister":"api/InviteNewUser/WeChatRegister?activityId="+activityId
+    };
+
+//    初始化分享shareFn,微信转发
+    window.wxTools.shareSeting();
+
+//    微信授权
+    window.wxTools.getUserInfo();
+
+//        好友列表最后一个好友底边框清除
+    $(".friendListShow li:last").css("border-bottom","none");
+
+//        老用户弹窗跳转APP下载页面
+    $(".oldUserAlertBtn").bind("click", function () {
+        $(".oldUserAlert,.oldUserAlertShadow").hide();
+        window.location.href="http://a.app.qq.com/o/simple.jsp?pkgname=com.hebao.app&ckey=CK1320751940251";//跳转到App下载页面；
+    });
+
+//        老用户通道
+    $(".oldUserBtn").bind("click", function () {
+        $(".oldUserAlert,.oldUserAlertShadow").show();
+    });
+
+//        点击弹窗阴影
+    $(".oldUserAlertShadow").bind("click",function () {
+        $(".oldUserAlertShadow,.oldUserAlert").hide();
+    });
+    init();
+
+    function init(){
+
+        $.ajax({
+            type: "GET",
+            url: configUrl + url.teamID,
+//            url: "teamID.json",
+            dataType: "json",
+            success: function (response) {
+                if(!response.Success){
+                    tipsError(response);
+                    if (response.ErrorCode == 100009) {
+                        window.location.href = "http://www.hebaodai.com/channel/newRegister/tid.html";//跳转共用注册页面
+                    }
+                }else{
+//                    老用户弹窗
+                    $(".oldUserAlert span:eq(1)").text(response.Data.Activity.MaxExperienceAmount);
+//            获取成员列表
+                    $(function () {
+                        var ary = response.Data.Team.TeamMembers;
+                        var html = " ";
+                        for(var i in ary){
+                            if(ary[i].NickName == (null||"")){
+                                ary[i].NickName = " ";
+                            }
+                            if (ary[i].RegisterDate) {
+                                ary[i].RegisterDate = ary[i].RegisterDate.split("+")[0].replace("T"," ");
+                            }
+                            html += "<li><span class=\"order\"></span><img src=" + ary[i].Avatar + " class=\"headPicture\"/><div class=\"isInvert\">已投资</div><div class=\"friendName\">" + ary[i].NickName + "</div><div class=\"listTime\">" + ary[i].RegisterDate + "</div></li>"
+                        }
+                        //            将成员列表插入ul标签中
+                        $(".friendListShow").html(html);
+                        $("li:last").css("border-bottom","none");
+                        //    好友列表的顺序
+                        for(var i=0;i<$("li").length;i++){
+                            $("ul .order").eq(i).text(i+1)
+                        }
+                        //             判定已投资图标的出现
+                        for (var j in ary) {
+                            if (ary[j].IsInvestment) {
+                                $(".friendListShow .isInvert").eq(j).show();
+                            } else {
+                                $(".friendListShow .isInvert").eq(j).hide();
+                            }
+                        }
+                    });
+
+//                好友列表显示状态
+                    if(response.Data.Team.ExperienceAmount == 0){
+                        $(".friendListIsNone").show().siblings("img,ul").hide();
+                    }else{
+                        $(".friendListIsOk,ul").show().siblings(".friendListIsNone").hide();
+                    }
+
+//                车票乘客的排序
+                    $(".registerPicket span").text(response.Data.Team.Order);
+
+//                火车昵称只取返回结果的最后一位
+                    $(".train span").text(response.Data.Team.CaptainName);
+                }
+            }
+        });
+    }
+
+    ~(function(){
+        var isCheckt=true
+                ,tel=0
+                ,coder=0
+                ,password=0
+                ,urlConfig=configUrl
+                ,os='ios'
+                ,u = navigator.userAgent
+                ,isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),//ios终端
+                reg = /^0?1[3|4|5|7|8][0-9]\d{8}$/;
+        var timer=null;
+        var OpenID = '';
+        //http://activity.hebaodai.com/
+
+        if(!isiOS) os='android';
+
+        $('#getCode').one('click',getCode);
+        $('.btn').one('click',submit);
+
+        function alertShadows(str){
+            $('.shadow span').html(str);
+            $('.shadow').show();
+            setTimeout(function(){
+                $('.shadow').hide();
+            },3000);
+        }
+
+        function submit(){
+            tel=$('#tel').val();
+            if(!reg.test(tel)) {
+                alertShadows('啊哦，手机号是11位哦');
+                $('.btn').one('click',submit);
+                return;
+            }
+            password=$('#password').val();
+            if(!password||password.length<6||password.length>15){
+                alertShadows('密码必须是6-15个之间的数字或英文字母哦');
+                $('.btn').one('click',submit);
+                return;
+            }
+            coder=$('#code').val();
+            if(!coder){
+                alertShadows('验证码输入错误');
+                $('.btn').one('click',submit);
+                return;
+            }
+
+//            这里上传的地址要修改一下(调第五个接口)；
+            $.post(urlConfig+url.WeChatRegister,{TeamId:teamId,NickName:localStorage.userName,PhoneNumber:tel,Password:password,Code:coder,Source:102120||0,ChannelId:102120||0,OS:os},function(data){
+                if(!data.Success){
+                    $('.btn').one('click',submit);
+                    if(data.ErrorCode==1006){
+                        alertShadows('手机号已注册');
+                        return;
+                    }
+                    if(data.ErrorCode==1019){
+                        alertShadows('啊哦，手机号是11位哦');
+                        return;
+                    }
+                    if(data.ErrorCode==1055){
+                        alertShadows('密码必须是6-15个之间的数字或英文字母哦');
+                        return;
+                    }
+                    if(data.ErrorCode==1056){
+                        alertShadows('未知异常');
+                        return;
+                    }
+                    if(data.ErrorCode==1411){
+                        alertShadows('验证码输入错误');
+                        return;
+                    }
+                    if(data.ErrorCode==2711){
+                        alertShadows('手机号已注销，换一个试试');
+                        return;
+                    }
+                    if(data.ErrorCode==1065){
+                        alertShadows('该号码暂不可用，如有疑问请联系客服');
+                        return;
+                    }
+                    window.location.href="http://a.app.qq.com/o/simple.jsp?pkgname=com.hebao.app&ckey=CK1320751940251";//跳转到App下载页面；
+                }else{
+                    window.location.href="http://a.app.qq.com/o/simple.jsp?pkgname=com.hebao.app&ckey=CK1320751940251";//跳转到App下载页面；
+                }
+            })
+        }
+
+
+        function getCode(){
+            tel=$('#tel').val();
+            var _this=$(this);
+            if(!reg.test(tel)) {
+                alertShadows('啊哦，手机号是11位哦');
+                $('#getCode').one('click',getCode);
+                return;
+            }else{
+                $.post(urlConfig+'api/User/SendRegisterCode',{PhoneNumber:tel},function(data){
+                    if(!data.Success){
+                        $('#getCode').one('click',getCode);
+                        if(data.ErrorCode==1006){
+                            alertShadows('手机号已注册');
+                            return;
+                        }
+                        if(data.ErrorCode==1019){
+                            alertShadows('啊哦，手机号是11位哦');
+                            return;
+                        }
+                        if(data.ErrorCode==1065){
+                            alertShadows('该号码暂不可用，如有疑问请联系客服');
+                            return;
+                        }
+                        if(data.ErrorCode==2711){
+                            alertShadows('手机号已注销，换一个试试');
+                            return;
+                        }
+                    }else{
+                        rounderNumber(_this);
+                    }
+                })
+            }
+        }
+
+        function clearRounderNumber(_this){
+            _this.css('background','#ff5151').html('获取验证码');
+            $('#getCode').one('click',getCode);
+            clearInterval(timer);
+            return;
+        }
+
+        function rounderNumber(_this){
+            var time=60;
+            _this.css('background','#cd2727');
+            timer=setInterval(function(){
+                if(time<1){
+                    clearRounderNumber(_this);
+                    return;
+                }
+                _this.html('('+time+'s)重新发送');
+                time--;
+            },1000)
+        }
+
+        function GetQueryString(name){
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if(r!=null)return  unescape(r[2]); return null;
+        }
+
+    })();
+
+</script>
+</body>
+</html>

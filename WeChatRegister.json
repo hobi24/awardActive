@@ -1,0 +1,11 @@
+{
+  "TeamId": 1,
+  "Avatar": "sample string 2",
+  "NickName": "sample string 3",
+  "PhoneNumber": "sample string 4",
+  "Password": "sample string 5",
+  "Code": "sample string 6",
+  "ChannelId": 7,
+  "OS": "sample string 8",
+  "Message": "sample string 9"
+}

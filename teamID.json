@@ -1,0 +1,42 @@
+{
+  "Data": {
+    "IsQualified": true,
+    "QualifiedDiffAmount": 1.0,
+    "IsReceived": true,
+    "Activity": {
+      "ActivityId": 86,
+      "ActivityState": 1,
+      "BeginTime": "2017-02-14T15:17:43.25+08:00",
+      "EndTime": "2017-02-14T15:17:43.25+08:00",
+      "ReceivePrizeEndTime": "2017-02-14T15:17:43.25+08:00",
+      "RegisterExperienceAmount": 5,
+      "InvestmentExperienceAmount": 6,
+      "MaxExperienceAmount": 7,
+      "QualifieAmount": 8
+    },
+    "Team": {
+      "TeamId": 1,
+      "CaptainAvatar": "sample string 2",
+      "CaptainName": "和",
+      "ExperienceAmount": 4,
+      "TeamMembers": [
+        {
+          "Avatar": "sample string 1",
+          "NickName": "sample string 2",
+          "RegisterDate": "2017-02-14T15:17:43.25+08:00",
+          "IsInvestment": true
+        },
+        {
+          "Avatar": "sample string 1",
+          "NickName": "sample string 2",
+          "RegisterDate": "2017-02-14T15:17:43.25+08:00",
+          "IsInvestment": true
+        }
+      ]
+    }
+  },
+  "Success": true,
+  "ErrorCode": "sample string 2",
+  "ErrorMessage": "sample string 3",
+  "ServiceTime": "sample string 4"
+}
